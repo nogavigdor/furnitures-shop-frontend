@@ -18,7 +18,7 @@ export const useProductStore = defineStore('product', {
       this.product = response.data
     },
     async createProduct(productData) {
-      const response = await axios.post('${API_URL}/products', productData, {
+      const response = await axios.post(`${API_URL}/products`, productData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'auth-token': localStorage.getItem('token')
