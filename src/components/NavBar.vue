@@ -1,10 +1,13 @@
 <template>
-  <nav class="bg-gray-800 p-4 text-white">
-    <div class="container mx-auto flex justify-between">
-      <div>
+  <nav class="bg-gray-800 p-4 text-white flex pr-20 pl-20">
+    <img alt="shop-logo" class="w-52" src="@/assets/logo.png" width="125" height="125" />
+    <div class="container mx-auto flex justify-between items-center text-xl">
+      <div class="pl-20">
         <router-link to="/" class="mr-4">Home</router-link>
         <router-link to="/products" class="mr-4">Products</router-link>
-        <router-link to="/instock" class="mr-4">In Stock</router-link>
+        <router-link to="/products/add" class="mr-4">
+          <button class="bg-green-500 px-4 py-2 rounded">Add Product</button></router-link
+        >
       </div>
       <div>
         <router-link v-if="!isAuthenticated" to="/login" class="mr-4">Login</router-link>
@@ -30,6 +33,4 @@ const logout = () => {
 }
 </script>
 
-<style scoped>
-/* Add any additional styles here */
-</style>
+<style scoped></style>

@@ -1,29 +1,85 @@
 <template>
-  <div class="container mx-auto">
-    <h1 class="text-2xl font-bold mb-4">Product List</h1>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-      <div v-for="product in products" :key="product.id" class="border p-4 rounded-lg">
-        <img :src="product.imageUrl" alt="" class="w-full h-48 object-cover mb-2" />
-        <h2 class="text-xl font-semibold">{{ product.name }}</h2>
-        <p>{{ product.description }}</p>
-        <p>${{ product.price }}</p>
-        <router-link :to="`/products/${product.id}`" class="text-blue-500"
-          >View Details</router-link
-        >
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div
+      v-for="product in products"
+      :key="product.id"
+      class="bg-white rounded-lg shadow-md overflow-hidden"
+    >
+      <img
+        :src="product.imageUrl ? product.imageUrl : defaultImage"
+        alt="Product Image"
+        class="w-full h-48 object-cover"
+      />
+      <div class="p-4">
+        <h3 class="text-lg font-bold mb-2">{{ product.name }}</h3>
+        <p class="text-gray-700 mb-2">{{ product.price }} USD</p>
+        <p class="text-sm text-green-500" v-if="product.inStock">In Stock</p>
+        <p class="text-sm text-red-500" v-else>Out of Stock</p>
+        <div class="flex justify-between mt-4">
+          <button @click="editProduct(product.id)" class="bg-blue-500 text-white px-3 py-1 rounded">
+            Edit
+          </button>
+          <button
+            @click="deleteProduct(product.id)"
+            class="bg-red-500 text-white px-3 py-1 rounded"
+          >
+            Delete
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { defineProps } from 'vue'
+import { useRouter } from 'vue-router'
 import { useProductStore } from '../stores/productStore'
 
-const productStore = useProductStore()
-
-onMounted(() => {
-  productStore.fetchProducts()
+const props = defineProps({
+  products: {
+    type: Array,
+    required: true
+  }
 })
 
-const products = productStore.products
+const defaultImage = 'path/to/default-image.jpg' // Replace with actual path to your default image
+const router = useRouter()
+const productStore = useProductStore()
+
+const editProduct = (id) => {
+  router.push({ name: 'editProduct', params: { id } })
+}
+
+const deleteProduct = async (id) => {
+  await productStore.deleteProduct(id)
+}
 </script>
+
+<style scoped>
+.product-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.product-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.product-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin-right: 16px;
+}
+
+.product-details {
+  flex-grow: 1;
+}
+
+.product-details button {
+  margin-right: 8px;
+}
+</style>
