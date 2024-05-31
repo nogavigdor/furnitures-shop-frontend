@@ -6,6 +6,4 @@
 import Register from '../components/RegisterUser.vue'
 </script>
 
-<style scoped>
-/* Add any additional styles here */
-</style>
+<style scoped></style>

@@ -4,7 +4,7 @@ import AboutView from '../views/AboutView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import LoginView from '../views/LoginView.vue'
 import ProductsView from '../views/ProductsView.vue'
-import ProductDetailsView from '../views/ProductDetails.vue'
+import ProductDetailsView from '../views/ProductDetailsView.vue'
 import AddProductView from '../views/AddProductView.vue'
 import EditProductView from '../views/EditProductView.vue'
 import { useUserStore } from '../stores/userStore'
@@ -61,11 +61,10 @@ const router = createRouter({
 // Navigation guard to protect routes
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore()
-  const publicPages = ['/', '/login', '/register', '/products', '/instock']
-  const authRequired = !publicPages.includes(to.path)
   const isAuthenticated = userStore.token !== null
 
-  if (authRequired && !isAuthenticated) {
+  // Check if any of the matched routes has `requiresAuth` meta field
+  if (to.matched.some((record) => record.meta.requiresAuth) && !isAuthenticated) {
     next('/login')
   } else {
     next()

@@ -12,9 +12,10 @@
       <div>
         <router-link v-if="!isAuthenticated" to="/login" class="mr-4">Login</router-link>
         <router-link v-if="!isAuthenticated" to="/register" class="mr-4">Register</router-link>
-        <button v-if="isAuthenticated" @click="logout" class="bg-red-500 px-4 py-2 rounded">
-          Logout
-        </button>
+        <template v-if="isAuthenticated">
+          <span class="mr-4">Welcome back, {{ userName }}</span>
+          <button @click="logout" class="bg-red-500 px-4 py-2 rounded">Logout</button>
+        </template>
       </div>
     </div>
   </nav>
@@ -27,6 +28,8 @@ import { useUserStore } from '../stores/userStore'
 const userStore = useUserStore()
 
 const isAuthenticated = computed(() => userStore.token !== null)
+
+const userName = computed(() => (userStore.user ? userStore.user.name : ''))
 
 const logout = () => {
   userStore.logout()

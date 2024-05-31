@@ -12,12 +12,19 @@
       />
       <div class="p-4">
         <h3 class="text-lg font-bold mb-2">{{ product.name }}</h3>
-        <p class="text-gray-700 mb-2">{{ product.price }} USD</p>
+        <p class="text-gray-700 mb-2">{{ product.price }} Kr.</p>
         <p class="text-sm text-green-500" v-if="product.inStock">In Stock</p>
         <p class="text-sm text-red-500" v-else>Out of Stock</p>
         <div class="flex justify-between mt-4">
           <button @click="editProduct(product.id)" class="bg-blue-500 text-white px-3 py-1 rounded">
             Edit
+          </button>
+          <!-- Info button -->
+          <button
+            @click="viewProductDetails(product.id)"
+            class="bg-gray-500 text-white px-3 py-1 rounded"
+          >
+            Info
           </button>
           <button
             @click="deleteProduct(product.id)"
@@ -53,6 +60,9 @@ const editProduct = (id) => {
 
 const deleteProduct = async (id) => {
   await productStore.deleteProduct(id)
+}
+const viewProductDetails = (id) => {
+  router.push({ name: 'productDetails', params: { id } })
 }
 </script>
 

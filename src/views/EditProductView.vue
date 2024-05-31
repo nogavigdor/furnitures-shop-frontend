@@ -18,6 +18,7 @@
         <textarea
           id="description"
           v-model="description"
+          required
           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         ></textarea>
       </div>
@@ -27,6 +28,7 @@
           id="price"
           type="number"
           v-model="price"
+          required
           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
       </div>
@@ -98,7 +100,7 @@ const handleImageUpload = (event) => {
 
 const fetchProduct = async () => {
   const productId = route.params.id
-  const response = await productStore.fetchProduct(productId)
+  await productStore.fetchProduct(productId) // Fetch product data
   const product = productStore.product
 
   name.value = product.name
@@ -114,11 +116,11 @@ const editProduct = async () => {
   formData.append('name', name.value)
   formData.append('description', description.value)
   formData.append('price', price.value)
-  formData.append('inStock', inStock.value)
+  formData.append('inStock', inStock.value.toString()) // Ensure boolean is converted to string
   formData.append(
     'categories',
     categories.value.split(',').map((cat) => cat.trim())
-  )
+  ) // Convert array to JSON string
   if (image.value) {
     formData.append('image', image.value)
   }
@@ -130,6 +132,7 @@ const editProduct = async () => {
     router.push('/products')
   } catch (error) {
     errorMessage.value = error.response ? error.response.data.message : error.message
+    console.error('Error updating product:', error.response ? error.response.data : error.message) // Log the error
   }
 }
 

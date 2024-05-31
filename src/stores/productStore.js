@@ -14,8 +14,18 @@ export const useProductStore = defineStore('product', {
       this.products = response.data
     },
     async fetchProduct(id) {
-      const response = await axios.get(`${API_URL}/products/${id}`)
-      this.product = response.data
+      try {
+        const response = await axios.get(`${API_URL}/products/${id}`)
+        if (response.data) {
+          this.product = response.data
+        } else {
+          console.error('No product found')
+          this.product = null // Ensure product is set to null if no data is returned
+        }
+      } catch (error) {
+        console.error('Error fetching product:', error)
+        this.product = null // Ensure product is set to null on error
+      }
     },
     async createProduct(productData) {
       const response = await axios.post(`${API_URL}/products`, productData, {

@@ -1,18 +1,43 @@
 <template>
-  <div class="container mx-auto">
-    <h1 class="text-2xl font-bold mb-4">Register</h1>
-    <form @submit.prevent="registerUser">
-      <input v-model="name" type="text" placeholder="Name" class="border p-2 mb-2 w-full" />
-      <input v-model="email" type="email" placeholder="Email" class="border p-2 mb-2 w-full" />
-      <input
-        v-model="password"
-        type="password"
-        placeholder="Password"
-        class="border p-2 mb-2 w-full"
-      />
-      <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Register</button>
-    </form>
-    <p v-if="error" class="text-red-500 mt-2">{{ error }}</p>
+  <div class="container mx-auto px-4 sm:px-0">
+    <div class="max-w-md mx-auto mt-10">
+      <h1 class="text-2xl font-bold mb-6 text-center">Register</h1>
+      <form @submit.prevent="registerUser" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <div class="mb-4">
+          <input
+            v-model="name"
+            type="text"
+            placeholder="Name"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          />
+        </div>
+        <div class="mb-4">
+          <input
+            v-model="email"
+            type="email"
+            placeholder="Email"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          />
+        </div>
+        <div class="mb-6">
+          <input
+            v-model="password"
+            type="password"
+            placeholder="Password"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+          />
+        </div>
+        <div class="flex items-center justify-between">
+          <button
+            type="submit"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          >
+            Register
+          </button>
+        </div>
+      </form>
+      <p v-if="error" class="text-red-500 text-center mt-2">{{ error }}</p>
+    </div>
   </div>
 </template>
 
@@ -39,4 +64,6 @@ const registerUser = async () => {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+/* Additional custom styles if needed */
+</style>
