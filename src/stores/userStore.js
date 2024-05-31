@@ -13,7 +13,7 @@ export const useUserStore = defineStore('user', {
     async login(userData) {
       const response = await axios.post('http://localhost:4000/api/user/login', userData)
       this.token = response.data.data.token
-      this.user = response.data.user
+      this.user = response.data.data.user
       localStorage.setItem('token', this.token)
       localStorage.setItem('user', JSON.stringify(this.user))
     },
